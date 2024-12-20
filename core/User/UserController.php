@@ -1,22 +1,23 @@
 <?php
 
-namespace Core\User\Controllers;
+namespace Core\User;
 
-use Core\DTOs\UserDTO;
 use Illuminate\Http\Request;
 use Core\User\Cases\CreateUser;
-use App\Http\Controllers\Controller;
 use Core\User\Cases\UpdateUser;
+use App\Http\Controllers\Controller;
+use Core\User\DTOs\UserDTO;
 
 class UserController extends Controller
 {
-    public function store(Request $request, CreateUser $case){
+    public function store(Request $request, CreateUser $case)
+    {
         $data = $request->validate([
             'name' => 'required',
             'email' => 'required',
             'password' => 'required',
         ]);
-        
+
         $payload = new UserDTO(
             name: $data['name'],
             email: $data['email'],
@@ -26,13 +27,14 @@ class UserController extends Controller
         return $case->execute($payload);
     }
 
-    public function update(Request $request, UpdateUser $case){
+    public function update(Request $request, UpdateUser $case)
+    {
         $data = $request->validate([
             'name' => 'required',
             'email' => 'required',
             'password' => 'required',
         ]);
-        
+
         $payload = new UserDTO(
             name: $data['name'],
             email: $data['email'],
@@ -40,5 +42,5 @@ class UserController extends Controller
         );
 
         return $case->execute($request->id, $payload);
-    }      
+    }
 }

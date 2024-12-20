@@ -2,12 +2,14 @@
 
 namespace Core\User\Cases;
 
-use Core\DTOs\UserDTO;
-use Core\User\Entities\User;
+use Core\User\Models\User;
+use Core\User\DTOs\UserDTO;
 use Illuminate\Support\Facades\Hash;
 
-class CreateUser{
-    public function execute(UserDTO $payload){
+class CreateUser
+{
+    public function execute(UserDTO $payload)
+    {
         User::create([
             'name' => $payload->name,
             'email' => $payload->email,

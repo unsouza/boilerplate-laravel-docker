@@ -2,12 +2,14 @@
 
 namespace Core\User\Cases;
 
-use Core\DTOs\UserDTO;
-use Core\User\Entities\User;
+use Core\User\DTOs\UserDTO;
+use Core\User\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-class UpdateUser{
-    public function execute(int $id, UserDTO $payload){
+class UpdateUser
+{
+    public function execute(int $id, UserDTO $payload)
+    {
         $user = User::findOrFail($id);
 
         $user->fill([
@@ -15,10 +17,10 @@ class UpdateUser{
             'email' => $payload->email,
         ]);
 
-        if($payload->password){
+        if ($payload->password) {
             $user->fill(['password' => Hash::make($payload->password)]);
         }
-        
+
         $user->save();
 
         return ['user_updated' => true];
